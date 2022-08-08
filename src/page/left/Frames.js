@@ -21,16 +21,16 @@ class Frames extends React.Component {
     }
   }
   getFirstFrameMeta = () => {
-    const { pagedFrames, mode, isMock, onFrameChange } = this.props
+    const { pagedFrames, onFrameChange } = this.props
     const pageId = Object.keys(pagedFrames)[0]
     const firstFrame = pagedFrames[pageId].frames[0]
     const frameId = firstFrame.id
-    const frameImageUrl = getImageUrl(firstFrame, mode, isMock)
+    const frameImageUrl = getImageUrl(firstFrame)
     onFrameChange(frameId, frameImageUrl, pageId)
     return { pageId, frameId, frameImageUrl }
   }
   changeFrameByIdProperty = prevProps => {
-    const { pagedFrames, onFrameChange, globalSettings, mode, isMock } = this.props
+    const { pagedFrames, onFrameChange, globalSettings } = this.props
     const { currentFrameId } = globalSettings
     const flattenedFrames = getFlattenedFrames(pagedFrames, false)
     const currentFrame = flattenedFrames.find(({id}) => id===currentFrameId)
@@ -41,7 +41,7 @@ class Frames extends React.Component {
     ) {
       const pageId = currentFrame.pageId
       const frameId = currentFrame.id
-      const frameImageUrl = getImageUrl(currentFrame, mode, isMock)
+      const frameImageUrl = getImageUrl(currentFrame)
       this.setState({
         pageId,
         frameId,
@@ -52,8 +52,8 @@ class Frames extends React.Component {
     }
   }
   handleFrameSelect = (frame, pageId) => {
-    const { onFrameChange, mode, isMock } = this.props
-    const frameImageUrl = getImageUrl(frame, mode, isMock)
+    const { onFrameChange } = this.props
+    const frameImageUrl = getImageUrl(frame)
     this.setState({
       pageId,
       frameId: frame.id,

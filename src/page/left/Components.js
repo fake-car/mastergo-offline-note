@@ -13,8 +13,8 @@ class Components extends React.Component {
     selectedIndex: 0
   }
   handleComponentSelect = (index, componentId) => {
-    const { onComponentChange, mode, isMock } = this.props
-    const componentImageUrl = getImageUrl(this.defaultComponents[index], mode, isMock)
+    const { onComponentChange } = this.props
+    const componentImageUrl = getImageUrl(this.defaultComponents[index])
     this.setState({
       searchValue: '',
       components: this.defaultComponents,

@@ -68,7 +68,7 @@ export const generateRects = (nodes, docRect, globalSettings) => {
       }
 
       // don't deal with invisible element
-      if (node.visible===false) {
+      if (node.isVisible===false) {
         // eslint-disable-next-line
         return
       }
@@ -197,7 +197,7 @@ export const getBound = (nodeBound, docRect) => {
 // get Bound of Frame
 export const getFrameBound = (strokes, strokeWeight, strokeAlign, effects) => {
   let strokeBase = 0
-  const visibleStrokes = strokes.filter(({visible}) => visible!==false)
+  const visibleStrokes = strokes.filter(({isVisible}) => isVisible!==false)
   if (visibleStrokes.length > 0) {
     switch (strokeAlign) {
       case 'OUTSIDE':
@@ -213,7 +213,7 @@ export const getFrameBound = (strokes, strokeWeight, strokeAlign, effects) => {
 
   const bound = { top: 0, bottom: 0, left: 0, right: 0 }
   effects
-    .filter(({type, visible}) => (type==='DROP_SHADOW' || type==='LAYER_BLUR') && visible!==false)
+    .filter(({type, isVisible}) => (type==='DROP_SHADOW' || type==='LAYER_BLUR') && isVisible!==false)
     // eslint-disable-next-line
     .map(effect => {
       const { offset, radius, spread } = effect

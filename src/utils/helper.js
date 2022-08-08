@@ -51,15 +51,14 @@ export async function asyncForEach(array, callback) {
   }
 }
 
-export function getImageUrl (item, mode, isMock) {
+export function getImageUrl (item) {
   const fileName = item.fileName ? `exports/${item.fileName}` : `${item.id.replace(/:/g, '-')}.png`
-  return (mode==='local' || isMock) ?
-    `${process.env.PUBLIC_URL}/data/${fileName}` :
-    item.image.url
+  return `${process.env.PUBLIC_URL}/data/${fileName}`
+
 }
 
-export function getBackgroundImageUrl (item, mode, isMock) {
-  return `url(${getImageUrl(item, mode, isMock)})`
+export function getBackgroundImageUrl (item) {
+  return `url(${getImageUrl(item)})`
 }
 
 export const onInputClick = (e, callback) => {

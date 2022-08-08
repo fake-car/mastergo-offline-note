@@ -84,14 +84,14 @@ const NestedFrames = function ({visible, pagedFrames, mode, isMock, onSelect}) {
   }, [pagedFrames])
 
   function handleFrameSelect (item, pageId) {
-    const frameImageUrl = getImageUrl(item, mode, isMock)
+    const frameImageUrl = getImageUrl(item)
     onSelect(item.id, frameImageUrl, pageId)
     setSelectedId(item.id)
   }
 
   useEffect(() => {
     const firstFrame = allFrames[0]
-    const frameImageUrl = getImageUrl(firstFrame, mode, isMock)
+    const frameImageUrl = getImageUrl(firstFrame)
     onSelect(firstFrame.id, frameImageUrl, firstFrame.pageId)
     setSelectedId(firstFrame.id)
   }, [allFrames, isMock, mode, onSelect])

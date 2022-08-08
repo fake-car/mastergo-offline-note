@@ -32,7 +32,7 @@ class RightPanel extends React.Component {
   handleDownloadAll = async () => {
     const { percentage } = this.state
     if (percentage!==0) return
-    const { mode, isMock, exportSettings, documentName, t } = this.props
+    const { exportSettings, documentName, t } = this.props
     const zip = new JSZip()
     const length = exportSettings.length
     const folderName = `${documentName.replace(/\//g, '-')}-exports`
@@ -41,7 +41,7 @@ class RightPanel extends React.Component {
 
     await asyncForEach(exportSettings, async (exportSetting, index) => {
       const imgName = exportSetting.fileName
-      const imgUrl = getImageUrl(exportSetting, mode, isMock)
+      const imgUrl = getImageUrl(exportSetting)
       const imgData = await getBufferData(imgUrl)
       this.setProgress((index+1)*Math.floor(90/length), t('dealing with', {name: imgName}))
       exportsFolder.file(imgName, imgData, {base64: true})

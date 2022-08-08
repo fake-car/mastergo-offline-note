@@ -110,12 +110,16 @@ class RightProps extends React.Component {
         </div>
         {/* position and size */}
         <div className="props-section props-basic">
-          <h5 className="section-title">{t('position and spacing')}</h5>
+          <h5 className="section-title">{t('layer')}</h5>
           <div className="section-items">
             <CopiableInput isQuiet label="X" value={ formattedNumber(elementData.left, globalSettings) }/>
             <CopiableInput isQuiet label="Y" value={ formattedNumber(elementData.top, globalSettings) }/>
             <CopiableInput isQuiet label="W" value={ formattedNumber(elementData.width, globalSettings) }/>
             <CopiableInput isQuiet label="H" value={ formattedNumber(elementData.height, globalSettings) }/>
+            {
+              node.paddingTop &&
+              <CopiableInput isQuiet label={'间距'} value={`${formattedNumber(elementData.paddingTop, globalSettings)}, ${formattedNumber(elementData.paddingRight, globalSettings)}, ${formattedNumber(elementData.paddingBottom, globalSettings)}, ${formattedNumber(elementData.paddingLeft, globalSettings)}`}/>
+            }
             {
               node.opacity!==undefined &&
               <CopiableInput isQuiet label={t('opacity')} value={ toFixed(node.opacity) }/>
@@ -124,6 +128,7 @@ class RightProps extends React.Component {
               node.cornerRadius &&
               <CopiableInput isQuiet label={t('radius')} value={ formattedNumber(node.cornerRadius, globalSettings) }/>
             }
+            {/* padding itemSpacing  mainAxisAlignItems blendmode rotation */}
           </div>
         </div>
         {

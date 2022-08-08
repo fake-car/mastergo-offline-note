@@ -199,7 +199,7 @@ export const getFillsStyle = fills => {
   }
   let type = ''
   const styles = fills
-    .filter(({visible}) => visible!==false)
+    .filter(({isVisible}) => isVisible!==false)
     .map(fill => {
       type = type==='' ? fill.type : ( type===fill.type ? type : 'MIX_FILL')
       switch (fill.type) {
@@ -259,7 +259,7 @@ export const getEffectsStyle = effects => {
   }
   let type = ''
   const styles = effects
-    .filter(({visible}) => visible!==false)
+    .filter(({isVisible}) => isVisible!==false)
     .map(effect => {
       type = type==='' ? effect.type : ( type===effect.type ? type : 'MIX_EFFECT')
       switch (effect.type) {
@@ -427,6 +427,13 @@ export const getStyleById = (styles, nodeStyles, type='fill') => {
   }
 }
 
+/**
+ * 格式化数组
+ * @param {*} number 数字
+ * @param {*} param1 全局设置
+ * @param {*} withoutUnit 是否带单位
+ * @returns 
+ */
 export const formattedNumber = (number, { platform, unit, resolution, remBase, numberFormat }, withoutUnit=false) => {
   const scaledNumber = number*resolutions[platform][resolution].value
   const finalNumber = (unit===3 || unit===4) ? number/remBase : scaledNumber
@@ -506,3 +513,4 @@ export const getCode = (node, fillItems, strokeItems, effectItems, textStyle, gl
 
   return code
 }
+

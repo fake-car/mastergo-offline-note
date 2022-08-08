@@ -5,7 +5,7 @@ import { onInputClick } from 'utils/helper'
 import WithTooltip from './WithTooltip'
 import './copiable-input.scss'
 
-const CopiableInput = ({ label, type='input', title, style, inputClass, isQuiet=false, labelWidth, onWrapperClick, value, t }) => {
+const CopiableInput = ({ label, type='input', title, style, inputClass, isQuiet=false, labelWidth, onWrapperClick, value, t, wrapperStyle, }) => {
   const [ copied, setCopied ] = useState(false)
   const [ timer, setTimer ] = useState()
   const onCopied = () => {
@@ -21,8 +21,7 @@ const CopiableInput = ({ label, type='input', title, style, inputClass, isQuiet=
   }
   useEffect(() => {
     return () => {
-      // clear when will unmount
-      timer!==undefined && clearTimeout(timer)
+      timer && clearTimeout(timer)
     }
   }, [timer])
   return <span
@@ -30,6 +29,7 @@ const CopiableInput = ({ label, type='input', title, style, inputClass, isQuiet=
     title={title}
     className={cn('copiable-input', {'copiable-input-quiet': isQuiet})}
     onClick={onWrapperClick}
+    style={wrapperStyle}
   >
     {
       label &&
