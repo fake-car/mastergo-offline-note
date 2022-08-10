@@ -1,4 +1,4 @@
-import React, { createRef } from 'react'
+import React, { createRef, Fragment } from 'react'
 import cn from 'classnames'
 import Prism from 'prismjs'
 import { withTranslation } from 'react-i18next'
@@ -11,6 +11,7 @@ import { ColorFormatSelect, FillItem, EffectItem, ExportItem } from '../items'
 import StyleReference from './StyleReference'
 import StyleMeta from './StyleMeta'
 import FontPanel from './FontPanel'
+import { BlendModeMap } from 'utils/const'
 import './index.scss'
 
 class RightProps extends React.Component {
@@ -54,6 +55,22 @@ class RightProps extends React.Component {
     const { globalSettings } = this.props
     return globalSettings.notShowStyleProperties && nodeStyles && nodeStyles[type]
   }
+
+  /**
+   * 
+   * 处理圆角
+   */
+  getCorners = (node, globalSettings) => {
+    const { cornerRadius, rectangleCornerRadii } = node
+    if (typeof cornerRadius !== 'string') {
+      return formattedNumber(cornerRadius, globalSettings)
+    } else {
+      return rectangleCornerRadii.reduce((cur, radius) => {
+        return cur + `${formattedNumber(radius, globalSettings)} `
+      }, '')
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { elementData, detailVisible, onCloseDetail } = this.props
     // switch selected element
@@ -116,19 +133,39 @@ class RightProps extends React.Component {
             <CopiableInput isQuiet label="Y" value={ formattedNumber(elementData.top, globalSettings) }/>
             <CopiableInput isQuiet label="W" value={ formattedNumber(elementData.width, globalSettings) }/>
             <CopiableInput isQuiet label="H" value={ formattedNumber(elementData.height, globalSettings) }/>
-            {
-              node.paddingTop &&
-              <CopiableInput isQuiet label={'间距'} value={`${formattedNumber(elementData.paddingTop, globalSettings)}, ${formattedNumber(elementData.paddingRight, globalSettings)}, ${formattedNumber(elementData.paddingBottom, globalSettings)}, ${formattedNumber(elementData.paddingLeft, globalSettings)}`}/>
+            {node.flexMode && node.flexMode !== 'NONE' &&             
+              <Fragment>
+                {
+                  !!node.paddingTop &&
+                  <CopiableInput wrapperStyle={{ flex: 1 }} style={{width: 'unset'}} isQuiet label={t('padding')} value={`${formattedNumber(elementData.paddingTop, globalSettings)} ${formattedNumber(elementData.paddingRight, globalSettings)} ${formattedNumber(elementData.paddingBottom, globalSettings)} ${formattedNumber(elementData.paddingLeft, globalSettings)}`}/>
+                }
+                {
+                  !!node.itemSpacing &&
+                  <CopiableInput isQuiet label={t('itemSpacing')} value={ formattedNumber(node.itemSpacing, globalSettings) }/>
+                }
+              </Fragment>
             }
             {
-              node.opacity!==undefined &&
+              node.mainAxisAlignItems === 'SPACING_BETWEEN' &&
+              <CopiableInput isQuiet label={t('mainAxisAlignItems')} value={'分布式' }/>
+            }
+            {
+              !!node.cornerRadius &&
+              <CopiableInput wrapperStyle={{ flex: 1 }} style={{width: 'unset'}} isQuiet label={t('radius')} value={this.getCorners(node, globalSettings)}/>
+            }
+            {
+              !!node.rotation &&
+              <CopiableInput isQuiet label={t('rotation')} value={ `${node.rotation.toFixed(2)}deg` }/>
+            }
+            {
+              node.blendMode && node.blendMode !== "NORMAL" &&
+              <CopiableInput isQuiet label={t('blendMode')} value={BlendModeMap[node.blendMode] || ''}/>
+            }
+            {
+              node.opacity!==undefined && node.opacity !== 1 &&
               <CopiableInput isQuiet label={t('opacity')} value={ toFixed(node.opacity) }/>
             }
-            {
-              node.cornerRadius &&
-              <CopiableInput isQuiet label={t('radius')} value={ formattedNumber(node.cornerRadius, globalSettings) }/>
-            }
-            {/* padding itemSpacing  mainAxisAlignItems blendmode rotation */}
+            {/*  mainAxisAlignItems */}
           </div>
         </div>
         {

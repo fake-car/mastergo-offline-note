@@ -35,9 +35,9 @@
 
   &.btn-primary{
     color: #FFF;
-    background: $primary-color;
+    background: rgba(53,98,236,1);
     &:hover{
-      background: darken($primary-color, 6%);
+      background: darken(rgba(53,98,236,1), 6%);
     }
   }
 
@@ -46,7 +46,7 @@
     border-color: $white-85;
     background: transparent;
     &:hover{
-      color: $primary-color;
+      color: rgba(53,98,236,1);
       background: $white-85;
     }
   }

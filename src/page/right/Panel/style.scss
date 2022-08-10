@@ -2,7 +2,7 @@
 
 .right-panel{
   height: 100%;
-  background: #222531;
+  background: #212121;
   transition: transform 0.2s;
   .panel-mask {
     position: absolute;
@@ -60,104 +60,6 @@
     .list-title{
       padding: 6px 12px;
       color: $white-85;
-    }
-  }
-  .panel-exports {
-    height: calc(100% - 36px);
-    overflow: auto;
-    .exports-download-all{
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 6px 12px;
-      color: $white-65;
-      transition: background 0.2s, color 0.2s;
-      cursor: pointer;
-      &.is-downloading{
-        justify-content: flex-start;
-      }
-      &:hover{
-        color: $white-85;
-        background: #141723;
-      }
-      svg{
-        margin-left: 6px;
-      }
-      span{
-        position: relative;
-        z-index: 1;
-      }
-      .download-all-progress{
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        background-color: #2f3446;
-        z-index: 0;
-      }
-    }
-    .exports-empty{
-      padding: 12px;
-      color: $white-36;
-    }
-  }
-  .panel-versions {
-    >li {
-      position: relative;
-      padding: 12px;
-      padding-left: 24px;
-      cursor: pointer;
-      transition: background 0.2s;
-      &:hover {
-        background: #141723;
-      }
-      &:first-child {
-        .version-timeline {
-          &::before {
-            top: 20px;
-          }
-        }
-      }
-      &.version-selected {
-        background-color: #2f3446;
-      }
-      h3 {
-        font-weight: 500;
-        font-size: 12px;
-      }
-      .version-note {
-        font-size: 11px;
-      }
-      .version-date {
-        font-size: 11px;
-        color: $white-36;
-      }
-      .version-timeline {
-        position: absolute;
-        top: 0;
-        left: 12px;
-        height: 100%;
-        &::before {
-          content: '';
-          position: absolute;
-          display: block;
-          top: 0;
-          bottom: 0;
-          left: 1.5px;
-          width: 1px;
-          background-color: #3f424c;
-        }
-        &::after {
-          content: '';
-          display: block;
-          width: 5px;
-          height: 5px;
-          margin-top: 18px;
-          border-radius: 2.5px;
-          background-color: #3f424c;
-        }
-      }
     }
   }
 }

@@ -5,7 +5,7 @@ import { withGlobalContextConsumer } from 'contexts/GlobalContext'
 import { CollapseButton } from 'components/utilities'
 import Frames from './Frames'
 import NestedFrames from './NestedFrames'
-import Components from './Components'
+import Slices from './Slices'
 import './index.scss'
 
 class LeftPanel extends React.Component {
@@ -20,7 +20,6 @@ class LeftPanel extends React.Component {
 
   render () {
     const {
-      components,
       includeComponents,
       mode,
       isMock,
@@ -28,7 +27,9 @@ class LeftPanel extends React.Component {
       globalSettings,
       onSiderTransitionEnd,
       onFrameOrComponentChange,
-      t
+      t,
+      documentName,
+      exportSettings,
     } = this.props
     const { leftCollapse } = globalSettings
     const { tabIndex } = this.state
@@ -49,7 +50,7 @@ class LeftPanel extends React.Component {
               <li
                 className={cn({selected: tabIndex===1})}
                 onClick={() => this.handleTabClick(1)}
-              >{t('components')}</li>
+              >{t('slices')}</li>
             </ul>
           }
           <div className={cn('left-sider-list', {'without-tab': !includeComponents})}>
@@ -72,13 +73,10 @@ class LeftPanel extends React.Component {
               />
             }
             {
-              !!includeComponents &&
-              <Components
+              <Slices
                 visible={tabIndex===1}
-                components={components}
-                mode={mode}
-                isMock={isMock}
-                onComponentChange={onFrameOrComponentChange}
+                documentName={documentName} 
+                exportSettings={exportSettings} 
               />
             }
           </div>

@@ -1,7 +1,7 @@
 .input-group{
   position: relative;
   display: flex;
-  background: #1C1F2A;
+  background: rgba(8, 8, 8, 1);
   border-radius: 2px;
   transition: background 0.2s;
   >*{
@@ -23,7 +23,7 @@
       background: transparent;
     }
     &:hover{
-      background: #1C1F2A;
+      background: rgba(8, 8, 8, 1);
     }
   }
 }

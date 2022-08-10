@@ -2,7 +2,7 @@
   position: relative;
   flex: 1;
   overflow: hidden;
-  background-color: #111421;
+  background-color: rgba(44, 44, 44, 1);
   .canvas-help{
     position: absolute;
     bottom: 16px;
@@ -17,7 +17,7 @@
     z-index: 1;
     transform: translateX(56px);
     &:hover{
-      background: #222531;
+      background: #212121;
     }
   }
   .canvas-steper{
@@ -46,7 +46,7 @@
         display: block;
       }
       &:hover{
-        background: #222531;
+        background: #212121;
       }
     }
     .steper-percentage{
@@ -57,7 +57,7 @@
       transition: 0.2s background;
       flex: 1;
       &:hover{
-        background: #222531;
+        background: #212121;
       }
     }
   }
@@ -67,7 +67,7 @@
     justify-content: center;
     position: absolute;
     padding: 60px;
-    background: #111421;
+    background: rgba(44, 44, 44, 1) ;
     transition: none;
   }
 }
@@ -83,7 +83,7 @@
         cursor: pointer;
         transition: 0.2s background;
         &:hover{
-          background: #222531;
+          background: #212121;
         }
       }
     }

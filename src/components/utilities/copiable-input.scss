@@ -4,13 +4,13 @@
 .copiable-input{
   display: flex;
   align-items: center;
-  background: #1C1F2A;
+  background: rgba(8, 8, 8, 1);
   border-radius: 2px;
   transition: background 0.2s;
   &-quiet{
     background: transparent;
     &:hover{
-      background: #1C1F2A;
+      background: rgba(8, 8, 8, 1);
     }
   }
   .copiable-label{
@@ -33,6 +33,7 @@
     border: none;
     background: transparent;
     cursor: pointer;
+    overflow: scroll;
   }
   >textarea{
     @include input-base;

@@ -35,11 +35,6 @@ function Canvas ({
         settings={{...settings, currentFrameId}}
         onHeaderBack={onHeaderBack}
         links={links}
-        versionData={{
-          versions,
-          currentVersion,
-          onVersionChange
-        }}
       />
     </I18nextProvider>
   )

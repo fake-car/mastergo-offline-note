@@ -25,7 +25,8 @@
     width: 240px;
     height: 100%;
     flex-shrink: 0;
-    background: #222531;
+    background: #212121;
+    z-index: 2;
     .left-sider-tabs{
       display: flex;
       justify-content: space-around;
@@ -76,13 +77,13 @@
           cursor: pointer;
           transition: background 0.2s;
           &:hover{
-            background: #141723;
+            background: rgba(50, 50, 50, 1);
           }
           &-hidden{
             display: none;
           }
           &.selected{
-            background: #303446;
+            background: #324894;
           }
           .item-thumbnail{
             flex-shrink: 0;
@@ -92,7 +93,9 @@
             background-position: center;
             background-size: contain;
             background-repeat: no-repeat;
-            background-color: #111421;
+            background-color: #3D3D3D;
+            border-radius: 6px;
+            overflow: hidden;
           }
           span {
             overflow: hidden;
@@ -118,18 +121,19 @@
               padding: 6px 12px;
               font-size: 12px;
               color: $white-65;
-              background-color: $black-3;
+              background-color: #212121;
               cursor: pointer;
               z-index: 1;
+              border-bottom: 1px solid #363945;
               span {
                 flex: 1;
               }
               svg {
                 transition: transform 0.2s;
               }
-              &:hover{
-                background: $black-2;
-              }
+              // &:hover{
+              //   background: $black-2;
+              // }
             }
             >ul {
               transition: height 0.2s;

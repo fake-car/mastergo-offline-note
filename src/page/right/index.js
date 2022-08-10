@@ -63,7 +63,6 @@ class Right extends React.Component {
       currentExportIds,
       currentIndex,
       onSiderTransitionEnd,
-      versionData,
       globalSettings
     } = this.props
     const { rightCollapse } = globalSettings
@@ -84,7 +83,6 @@ class Right extends React.Component {
             documentName={documentName}
             propsPanelState={propsPanelState}
             onShowDetail={this.openStyleDetail}
-            versionData={versionData}
           />
           {
             elementData &&

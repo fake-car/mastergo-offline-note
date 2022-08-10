@@ -2143,6 +2143,7 @@ const FILE_DATA = {
           "strokeJoin": "MITER",
           "dashCap": "NONE",
           "strokeDashes": [],
+          "cornerRadius": 'mg(fixed)',
           "rectangleCornerRadii": [0, 19, 28, 27],
           "absoluteBoundingBox": {
             "width": 368,
