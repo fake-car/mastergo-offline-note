@@ -11,7 +11,8 @@ import { ColorFormatSelect, FillItem, EffectItem, ExportItem } from '../items'
 import StyleReference from './StyleReference'
 import StyleMeta from './StyleMeta'
 import FontPanel from './FontPanel'
-import { BlendModeMap } from 'utils/const'
+import AutoLayout from './autoLayout'
+import { BlendModeMap, strokeAlignMap } from 'utils/const'
 import './index.scss'
 
 class RightProps extends React.Component {
@@ -100,10 +101,10 @@ class RightProps extends React.Component {
       t
     } = this.props
     const { node } = elementData
-    const { strokes, effects, styles: nodeStyles } = node
+    const { strokes, effects, styles: nodeStyles, bound } = node
     const { fills, exportSettings, flag, isPieceSelected, textStyle } = this.state
-    const { styles: fillItems } = getFillsStyle(fills)
-    const { styles: strokeItems } = getFillsStyle(strokes)
+    const { styles: fillItems } = getFillsStyle(fills, bound)
+    const { styles: strokeItems } = getFillsStyle(strokes, bound)
     const { styles: effectItems } = getEffectsStyle(effects)
     const code = getCode(node, fillItems, strokeItems, effectItems, textStyle, globalSettings)
     const styledCode = Prism.highlight(code, Prism.languages.css, 'css')
@@ -137,7 +138,7 @@ class RightProps extends React.Component {
               <Fragment>
                 {
                   !!node.paddingTop &&
-                  <CopiableInput wrapperStyle={{ flex: 1 }} style={{width: 'unset'}} isQuiet label={t('padding')} value={`${formattedNumber(elementData.paddingTop, globalSettings)} ${formattedNumber(elementData.paddingRight, globalSettings)} ${formattedNumber(elementData.paddingBottom, globalSettings)} ${formattedNumber(elementData.paddingLeft, globalSettings)}`}/>
+                  <CopiableInput wrapperStyle={{ flex: 1 }} style={{width: 'unset'}} isQuiet label={t('padding')} value={`${formattedNumber(node.paddingTop, globalSettings)} ${formattedNumber(node.paddingRight, globalSettings)} ${formattedNumber(node.paddingBottom, globalSettings)} ${formattedNumber(node.paddingLeft, globalSettings)}`}/>
                 }
                 {
                   !!node.itemSpacing &&
@@ -155,7 +156,7 @@ class RightProps extends React.Component {
             }
             {
               !!node.rotation &&
-              <CopiableInput isQuiet label={t('rotation')} value={ `${node.rotation.toFixed(2)}deg` }/>
+              <CopiableInput isQuiet label={t('rotation')} value={ `${toFixed(node.rotation)}deg` }/>
             }
             {
               node.blendMode && node.blendMode !== "NORMAL" &&
@@ -165,7 +166,9 @@ class RightProps extends React.Component {
               node.opacity!==undefined && node.opacity !== 1 &&
               <CopiableInput isQuiet label={t('opacity')} value={ toFixed(node.opacity) }/>
             }
-            {/*  mainAxisAlignItems */}
+            {node.flexMode && node.flexMode !== 'NONE' && 
+              <AutoLayout flexMode={node.flexMode} mainAxisSizingMode={node.mainAxisSizingMode} crossAxisSizingMode={node.crossAxisSizingMode} />
+            }
           </div>
         </div>
         {
@@ -308,13 +311,13 @@ class RightProps extends React.Component {
                 <InputGroup>
                   <CopiableInput label={t('stroke weight')} value={ formattedNumber(node.strokeWeight, globalSettings) }/>
                   {
-                    node.strokeDashes &&
+                    node.strokeDashes && !!node.strokeDashes.length &&
                     <CopiableInput
                       label={t('stroke dash')}
                       value={ node.strokeDashes.map(dash => formattedNumber(dash, globalSettings, true)).join() }
                     />
                   }
-                  <CopiableInput label={t('stroke position')} value={ node.strokeAlign.toLowerCase() }/>
+                  <CopiableInput label={t('stroke position')} value={ strokeAlignMap[node.strokeAlign.toLowerCase()] }/>
                 </InputGroup>
               </>
             }

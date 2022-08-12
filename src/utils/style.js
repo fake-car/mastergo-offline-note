@@ -1,6 +1,7 @@
 import Color from "color"
 import { toFixed } from 'utils/mark'
 import { DEFAULT_SETTINGS, WEB_MULTIPLE, IOS_DENSITY, ANDROID_DENSITY, UNITS, COLOR_FORMATS, ANDROID_COLOR_FORMATS } from 'utils/const'
+import { decomposeTSR } from 'transformation-matrix'
 
 const resolutions = [ WEB_MULTIPLE, IOS_DENSITY, ANDROID_DENSITY ]
 
@@ -109,34 +110,122 @@ export const stopsToBackgroundWithFormat = (stops, globalSettings) => {
   ).join(', ')
 }
 
-export const getGradientDegreeFromMatrix = gradientTransform => {
-  const angle = Math.atan2(-gradientTransform[1][0], gradientTransform[0][0]) * (180 / Math.PI)
-  if (angle >= -180 && angle <= 90) {
-    return toFixed(angle+90) + '°'
-  } else {
-    return toFixed(angle-270) + '°'
-  }
-}
+export const getGradientDegreeFromMatrix = (gradientTransform, linear = true) => {
+  // let rotation = 180 / Math.PI * Math.acos(gradientTransform[0][0])
+  // const quadrant = Math.asin(gradientTransform[1][0])
+  // if (false) {
+  //     rotation = quadrant > 0 ? -rotation : rotation
+  // } else {
+  //     rotation = quadrant > 0 ? rotation : -rotation
+  // }
+  // if (rotation >= 360) {
+  //     rotation = rotation - 360
+  // }
+  // if (rotation < 0) {
+  //     rotation = rotation + 360
+  // }
+  // debugger
 
-export const getGradientDegreeFromPositions = positions => {
-  const offsetX = positions[1].x-positions[0].x
-  const offsetY = positions[1].y-positions[0].y
-  const a = Math.atan2(offsetY, offsetX)
-  let angle = a * 180 / Math.PI
-  if (angle > 360) {
-      angle -= 360
-  }
-  if (angle < 0) {
-      angle += 360
-  }
+  const mr = decomposeTSR({a: gradientTransform[0][0], b: gradientTransform[1][0], c: gradientTransform[0][1], d: gradientTransform[1][1], e: gradientTransform[0][2], f:gradientTransform[1][2] })
+  const angle = mr.rotation.angle * (180 / Math.PI) 
+  debugger
   return toFixed(angle) + '°'
 }
 
-export const getGradientDegree = fill =>
-  fill.gradientHandlePositions ?
-  getGradientDegreeFromPositions(fill.gradientHandlePositions) :
+/**
+ * 矩阵乘法
+ * @param a 第一个矩阵
+ * @param b 第二个矩阵
+ * @returns 矩阵乘积
+ */
+ export function multiplyMatrix(a, b) {
+  if (!a.length || a[0].length !== b.length) {
+    return undefined;
+  }
+  const c = new Array(a.length);
+  for (let i = 0; i < a.length; i++) {
+    c[i] = new Array(b[0].length);
+    for (let j = 0; j < b[0].length; j++) {
+      c[i][j] = 0;
+      for (let k = 0; k < b.length; k++) {
+        c[i][j] += a[i][k] * b[k][j];
+      }
+    }
+  }
+  return c;
+}
+
+/**
+ * 计算直线相对于y轴的夹角
+ * @param line 直线的两个端点坐标
+ * @returns 角度(0 ~ 360)
+ */
+export function calLineAngle(line) {
+  const p1 = line[0];
+  const p2 = line[1];
+  const x = p2.x - p1.x;
+  const y = p2.y - p1.y;
+  let res = (Math.atan2(y, x) * 180) / Math.PI + 90;
+  if (res < 0) {
+    res += 360;
+  }
+  return res;
+}
+
+export const getGradientDegreeFromPositions = (positions, bound = { width: 1, height: 1, x: 0, y:0 }, linear = true) => {
+  // const offsetX = positions[1].x-positions[0].x
+  // const offsetY = positions[1].y-positions[0].y
+  // const a = Math.atan2(offsetY, offsetX)
+  // let angle = a * 180 / Math.PI
+  // if (angle > 360) {
+  //     angle -= 360
+  // }
+  // if (angle < 0) {
+  //     angle += 360
+  // }
+
+  // 坐标转换
+  const mx = [
+    [bound.width, 0, bound.x],
+    [0, bound.height, bound.y],
+    [0, 0, 1],
+  ];
+  let pos1; let
+    pos2;
+  try {
+    pos1 = [
+      [positions[0].x],
+      [positions[0].y],
+      [1],
+    ];
+    pos2 = [
+      [positions[1].x],
+      [positions[1].y],
+      [1],
+    ];
+  } catch (e) {
+    return '';
+  }
+  if (linear) {
+    pos1 = multiplyMatrix(mx, pos1);
+    pos2 = multiplyMatrix(mx, pos2);
+  }
+  const position = [
+    { x: pos1[0][0], y: pos1[1][0] },
+    { x: pos2[0][0], y: pos2[1][0] },
+  ];
+  //计算角度
+  const angle = Math.round(calLineAngle(position));
+
+
+  return toFixed(angle) + '°'
+}
+
+export const getGradientDegree = (paint, bound, linear) =>
+  paint.gradientHandlePositions ?
+  getGradientDegreeFromPositions(paint.gradientHandlePositions, bound, linear) :
   // from plugin
-  getGradientDegreeFromMatrix(fill.gradientTransform)
+  getGradientDegreeFromMatrix(paint.transform, linear)
 
 export const getSolidColor = fill => ({
   codeTemplate: '{{color}}',
@@ -147,34 +236,34 @@ export const getSolidColor = fill => ({
   ahex: getCSSAHEX(getCSSHEXA(fill.color, fill.opacity)),
   rgba: getCSSRGBA(fill.color, fill.opacity),
   hsla: getCSSHSLA(fill.color, fill.opacity),
-  type: 'Solid'
+  type: 'SOLID'
 })
 
-export const getLinearGradient = fill => ({
+export const getLinearGradient = (fill, bound) => ({
   codeTemplate: 'linear-gradient({{degree}}, {{stops}})',
   css: `linear-gradient(to bottom, ${ stopsToBackground(getStops(fill.gradientStops)) })`,
   opacity: getOpacity(fill.opacity),
   type: 'Linear',
   stops: getStops(fill.gradientStops),
-  angle: getGradientDegree(fill)
+  angle: getGradientDegree(fill, bound)
 })
 
-export const getRadialGradient = fill => ({
+export const getRadialGradient = (fill, bound) => ({
   codeTemplate: 'radial-gradient(circle at 50% 50%, {{stops}})',
   css: `radial-gradient(circle at 50% 50%, ${ stopsToBackground(getStops(fill.gradientStops)) })`,
   opacity: getOpacity(fill.opacity),
   type: 'Radial',
   stops: getStops(fill.gradientStops),
-  angle: getGradientDegree(fill)
+  angle: getGradientDegree(fill, bound)
 })
 
-export const getAngularGradient = fill => ({
+export const getAngularGradient = (fill, bound) => ({
   codeTemplate: 'conic-gradient(from {{degree}}, {{stops}})',
   css: `conic-gradient(from 0.25turn, ${ stopsToBackground(getStops(fill.gradientStops)) })`,
   opacity: getOpacity(fill.opacity),
   type: 'Angular',
   stops: getStops(fill.gradientStops),
-  angle: getGradientDegree(fill)
+  angle: getGradientDegree(fill, bound, false)
 })
 
 export const getDiamondCodeTemplate = () => {
@@ -184,35 +273,35 @@ export const getDiamondCodeTemplate = () => {
     .join(', \n')
 }
 
-export const getDiamondGradient = fill => ({
+export const getDiamondGradient = (fill, bound) => ({
   codeTemplate: getDiamondCodeTemplate(),
   css: getDiamondCodeTemplate().replace(/{{stops}}/g, stopsToBackground(getStops(fill.gradientStops))),
   opacity: getOpacity(fill.opacity),
   type: 'Diamond',
   stops: getStops(fill.gradientStops),
-  angle: getGradientDegree(fill)
+  angle: getGradientDegree(fill, bound)
 })
 
-export const getFillsStyle = fills => {
-  if (!fills) {
+export const getFillsStyle = (paints, bound) => {
+  if (!paints) {
     return { styles:[] }
   }
   let type = ''
-  const styles = fills
+  const styles = paints
     .filter(({isVisible}) => isVisible!==false)
-    .map(fill => {
-      type = type==='' ? fill.type : ( type===fill.type ? type : 'MIX_FILL')
-      switch (fill.type) {
+    .map(paint => {
+      type = type==='' ? paint.type : ( type===paint.type ? type : 'MIX_FILL')
+      switch (paint.type) {
         case 'SOLID':
-          return getSolidColor(fill)
+          return getSolidColor(paint)
         case 'GRADIENT_LINEAR':
-          return getLinearGradient(fill)
+          return getLinearGradient(paint, bound)
         case 'GRADIENT_RADIAL':
-          return getRadialGradient(fill)
+          return getRadialGradient(paint, bound)
         case 'GRADIENT_ANGULAR':
-          return getAngularGradient(fill)
+          return getAngularGradient(paint, bound)
         case 'GRADIENT_DIAMOND':
-          return getDiamondGradient(fill)
+          return getDiamondGradient(paint, bound)
         default:
           return ''
       }
@@ -461,7 +550,7 @@ export const getCode = (node, fillItems, strokeItems, effectItems, textStyle, gl
   if (fillItems.length) {
     if (node.type==='TEXT') {
       fillItems
-        .filter(({type}) => type==='Solid')
+        .filter(({type}) => type==='SOLID')
         // eslint-disable-next-line
         .map(fill => {
           code += `color: ${getFillCSSCode(fill, globalSettings)};\n`
@@ -478,7 +567,7 @@ export const getCode = (node, fillItems, strokeItems, effectItems, textStyle, gl
   if (strokeItems.length) {
     const borderStyle = strokeDashes ? 'dashed' : 'solid'
     strokeItems
-      .filter(({type}) => type==='Solid')
+      .filter(({type}) => type==='SOLID')
       // eslint-disable-next-line
       .map(stroke => {
         const strokeColor = getFillCSSCode(stroke, globalSettings)

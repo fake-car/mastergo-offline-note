@@ -11,8 +11,8 @@
     "blur": "Blur",
     "stop angle": "Angle",
     "stop opacity": "Opacity",
-    "stop position": "Position"
-
+    "stop position": "Position",
+    "color alpha": "Alpha"
   },
   "zh": {
     "font family": "字体",
@@ -26,6 +26,7 @@
     "blur": "模糊",
     "stop angle": "角度",
     "stop opacity": "不透明度",
-    "stop position": "位置"
+    "stop position": "位置",
+    "color alpha": "不透明度"
   }
 }

@@ -167,3 +167,12 @@ export const sizingMode = {
   'AUTO': '适应',
   'FIXED': '固定',
 }
+
+/**
+ * 描边类型
+ */
+export const strokeAlignMap = {
+  "inside": '内部',
+  'outside': '外部',
+  'center': '居中'
+}

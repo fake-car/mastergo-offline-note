@@ -3,6 +3,7 @@ import babel from 'rollup-plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import external from 'rollup-plugin-peer-deps-external';
 import scss from 'rollup-plugin-scss';
+import url from "rollup-plugin-url"
 import resolve from '@rollup/plugin-node-resolve';
 import image from '@rollup/plugin-image'
 import markdown from '@jackfranklin/rollup-plugin-markdown'
@@ -52,7 +53,10 @@ const config = {
       ]
     }),
     scss({
-      outputStyle: isProduction ? 'compressed' : 'compact'
+      outputStyle: isProduction ? 'compressed' : 'compact',
+    }),
+    url({
+      limit: 10000 * 1024, // inline files < 10k, copy files > 10k
     }),
     babel({
       exclude: 'node_modules/**'

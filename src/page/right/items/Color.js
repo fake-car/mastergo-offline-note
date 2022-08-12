@@ -20,7 +20,7 @@ const Color = ({color, globalSettings, t}) => {
         <CopiableInput
           value={color.alpha}
           style={{width: 36}}
-          title="Alpha"
+          title={t('color alpha')}
         />
       }
     </Fragment>

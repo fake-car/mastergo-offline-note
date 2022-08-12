@@ -1,0 +1,173 @@
+
+.autoLayout {
+  width: 100%;
+  height: 78px;
+  padding: 6px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+  &-preview {
+    width: 66px;
+    height: 66px;
+    border-radius: 6px;
+    border: 1px solid #383941;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    &-abstract {
+      display: flex;
+      justify-content: center;
+
+      & > i{
+        display: block;
+      }
+    }
+
+    &-top {
+      position: absolute;
+      flex-direction: row;
+      top: 0;
+      left: 0;
+      height: 6px;
+      width: 100%;
+      
+      .icon-fixed {
+        position: absolute;
+        top: -7px;
+        transform: rotate(90deg);
+      }
+
+      .icon-auto {
+        position: absolute;
+        top: 3px;
+        transform: rotate(0);
+      }
+    }
+
+    &-left {
+      width: 6px;
+      height: 24px;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      position: absolute;
+      flex-direction: column;
+
+      .icon-fixed {
+        position: absolute;
+        left: 2px;
+        transform: rotate(0);
+      }
+
+      .icon-auto {
+        position: absolute;
+        left: -6px;
+        transform: rotate(-90deg);
+      }
+    }
+
+    &-right {
+      width: 6px;
+      height: 24px;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      position: absolute;
+      flex-direction: column;
+      width: 6px;
+
+      .icon-fixed {
+        position: absolute;
+        right: 2px;
+        transform: rotate(0);
+      }
+
+      .icon-auto {
+        position: absolute;
+        right: -6px;
+        transform: rotate(90deg);
+      }
+    }
+
+    &-bottom {
+      width: 100%;
+      height: 6px;
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      flex-direction: row;
+
+      .icon-fixed {
+        position: absolute;
+        bottom: -7px;
+        transform: rotate(90deg);
+      }
+
+      .icon-auto {
+        position: absolute;
+        bottom: 3px;
+        transform: rotate(180deg);
+      }
+    }
+
+    &-area-indictor {
+      width: 44px;
+      height: 44px;
+      background: hsla(0, 0, 100%, 0.06);
+      border-radius: 4px;
+      padding: 8px;
+      transition: width 0.3s ease-out, height 0.3s ease-out;
+      &-bars {
+        display: flex;
+        flex-direction: column;
+        width: 16px;
+        height: 16px;
+        justify-content: space-between;
+        > div {
+          height: 4px;
+          border-radius: 1px;
+          background: hsla(0, 0, 100%, 0.18);
+        }
+        .bar1 {
+          width: 16px;
+        }
+        .bar2 {
+          width: 8px;
+        }
+        .bar3 {
+          width: 12px;
+        }
+      }
+    }
+
+  }
+
+  &-info {
+    width: 75px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &-item {
+      height: 30px;
+      line-height: 30px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 13px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      & > i {
+        display: block;
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+}

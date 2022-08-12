@@ -10,7 +10,7 @@ import Color from './Color'
 import './fill-item.scss'
 
 const FillItem = ({flag, style, globalSettings, t}) => {
-  const isSolid = style.type==='Solid'
+  const isSolid = style.type==='SOLID'
   const [isExpanded, setExpanded] = useState(false)
   return <ul key={flag} className={cn('fill-item', { 'fill-item-expanded': isExpanded })}>
     <li className="fill-summary" onClick={() => setExpanded(!isExpanded)}>
