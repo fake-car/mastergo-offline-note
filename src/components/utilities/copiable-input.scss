@@ -16,10 +16,11 @@
   .copiable-label{
     margin-left: 6px;
     line-height: 14px;
-    color: $white-36;
+    color: $white-50;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    font-weight: 500;
     svg{
       display: block;
     }

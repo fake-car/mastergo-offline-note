@@ -12,7 +12,8 @@ import './slices.scss'
 class SlicesPanel extends React.Component {
   state = {
     percentage: 0,
-    progressText: ''
+    progressText: '',
+    overflow: false,
   }
   setProgress = (percentage, progressText) => {
     this.setState({
@@ -49,15 +50,27 @@ class SlicesPanel extends React.Component {
         }, 800)
       })
   }
+
+  onRightClick = (isShow) => {
+    this.setState({
+      overflow: !isShow,
+    })
+  }
+
   componentDidMount() {
   }
   render () {
     const { mode, isMock, exportSettings, t, visible } = this.props
-    const { percentage, progressText } = this.state
+    const { percentage, progressText, overflow } = this.state
     const { protocol } = window.location
     return (
       <div className={cn('right-panel', {hide: !visible})}>
-        <ul className={cn('panel-exports')}>
+        <ul 
+          className={cn('panel-exports')}
+          style={{
+            overflowY: overflow? 'scroll' : 'unset'
+          }}
+        >
             {
               /^http/.test(protocol) && !!exportSettings.length &&
               <li
@@ -78,6 +91,7 @@ class SlicesPanel extends React.Component {
                       isMock={isMock}
                       exportSetting={exportSetting}
                       index={index}
+                      onRightClick={this.onRightClick}
                     />
                   </li>
                 ) :
