@@ -104,7 +104,7 @@ class Frames extends React.Component {
         <ul className={cn('list-container frames', {hide: !visible})}>
           {
             Object.keys(pagedFrames).map(key => {
-              const frames = pagedFrames[key].frames.filter(({name}) => name.toLowerCase().includes(searchValue))
+              const frames = pagedFrames[key].frames.filter(({name}) => name.includes(searchValue))
               return (
                 <li key={key} className={cn('frames-page', {'frames-page-collapsed': collapsedPages.includes(key)})}>
                   <h4 onClick={() => this.togglePage(key)}>
