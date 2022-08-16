@@ -30,7 +30,7 @@ class Settings extends Component {
           </select>
         </div>
       </div>
-      <div className="form">
+      {/* <div className="form">
         <div className="form-item settings-title">其他</div>
         <div className="form-item form-item-checkbox">
           <label>
@@ -68,7 +68,7 @@ class Settings extends Component {
           </label>
           <div className="help-block">{t('do not show style properties tip')}</div>
         </div>
-      </div>
+      </div> */}
     </div>
   }
 }

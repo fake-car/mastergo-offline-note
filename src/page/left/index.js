@@ -20,7 +20,6 @@ class LeftPanel extends React.Component {
 
   render () {
     const {
-      includeComponents,
       mode,
       isMock,
       pagedFrames,
@@ -41,7 +40,7 @@ class LeftPanel extends React.Component {
         <CollapseButton placement="left" />
         <div className="left-sider">
           {
-            !!includeComponents &&
+            exportSettings.length &&
             <ul className="left-sider-tabs">
               <li
                 className={cn({selected: tabIndex===0})}
@@ -53,7 +52,7 @@ class LeftPanel extends React.Component {
               >{t('slices')}</li>
             </ul>
           }
-          <div className={cn('left-sider-list', {'without-tab': !includeComponents})}>
+          <div className={cn('left-sider-list', {'without-tab': !exportSettings.length})}>
             {
               // 此处不能使用 useNestedPages 判断，因为默认为 undefined 会进入后一个，导致出错中断
               Array.isArray(pagedFrames) ?

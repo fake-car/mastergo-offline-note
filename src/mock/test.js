@@ -16,7 +16,7 @@ const SETTINGS = {
   "unit": 2,
   "remBase": 16,
   "convention": 0,
-  "includeComponents": true,
+  "includeComponents": false,
   "imagesConvention": 1,
   "exportWebP": false
 }
