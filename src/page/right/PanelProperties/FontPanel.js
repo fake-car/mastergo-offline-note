@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { withTranslation } from 'react-i18next'
 import cn from 'classnames'
 import { HelpCircle, Copy } from 'react-feather'
-import Tooltip from 'rc-tooltip'
+// import Tooltip from 'rc-tooltip'
 import TextItems from '../items/TextItems'
 import PieceWithCopy from './PieceWithCopy'
 import StyleReference from './StyleReference'
@@ -12,7 +12,7 @@ import { getTextTable } from 'utils/text'
 import StyleMeta from './StyleMeta'
 import './font-panel.scss'
 
-import multipleStylesImage from './multi-styles.gif'
+// import multipleStylesImage from './multi-styles.gif'
 
 class FontPanel extends React.Component {
   constructor(props) {
@@ -81,7 +81,7 @@ class FontPanel extends React.Component {
               )
             }
           </div>
-          {
+          {/* {
             !!textTable.length && propsSider &&
             <Tooltip
               trigger={['click']}
@@ -104,7 +104,7 @@ class FontPanel extends React.Component {
                 <span>{t('multiple text styles')}</span> <HelpCircle size={12}/>
               </p>
             </Tooltip>
-          }
+          } */}
         </div>
         {
           stylePropertiesVisible ?
