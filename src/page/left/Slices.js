@@ -13,7 +13,6 @@ class SlicesPanel extends React.Component {
   state = {
     percentage: 0,
     progressText: '',
-    overflow: false,
   }
   setProgress = (percentage, progressText) => {
     this.setState({
@@ -51,36 +50,18 @@ class SlicesPanel extends React.Component {
       })
   }
 
-  onRightClick = (isShow) => {
-    this.setState({
-      overflow: !isShow,
-    })
-  }
 
   componentDidMount() {
   }
   render () {
     const { mode, isMock, exportSettings, t, visible } = this.props
-    const { percentage, progressText, overflow } = this.state
+    const { percentage, progressText } = this.state
     const { protocol } = window.location
     return (
       <div className={cn('right-panel', {hide: !visible})}>
         <ul 
           className={cn('panel-exports')}
-          style={{
-            overflowY: overflow? 'scroll' : 'unset'
-          }}
         >
-            {
-              /^http/.test(protocol) && !!exportSettings.length &&
-              <li
-                className={cn('exports-download-all', {'is-downloading': percentage})}
-                onClick={this.handleDownloadAll}
-              >
-                <span>{ progressText || t('download all') }</span> { !percentage && <DownloadCloud size={14}/> }
-                <div className="download-all-progress" style={{width: `${percentage}%`}}/>
-              </li>
-            }
             {
               !!exportSettings.length ?
               exportSettings
@@ -91,13 +72,23 @@ class SlicesPanel extends React.Component {
                       isMock={isMock}
                       exportSetting={exportSetting}
                       index={index}
-                      onRightClick={this.onRightClick}
+                      isLeft
                     />
                   </li>
                 ) :
               <li className="exports-empty">{t('no exports')}</li>
             }
           </ul>
+          {
+            !!exportSettings.length &&
+            <li
+              className={cn('exports-download-all', {'is-downloading': percentage})}
+              onClick={this.handleDownloadAll}
+            >
+              <span>{ progressText || `${t('export all')} ${exportSettings.length} ${t('piece')} ${t('slices')}` }</span> { !percentage && <DownloadCloud size={14}/> }
+              <div className="download-all-progress" style={{width: `${percentage}%`}}/>
+            </li>
+          }
       </div>
     )
   }

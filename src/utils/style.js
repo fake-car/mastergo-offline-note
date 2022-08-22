@@ -128,7 +128,6 @@ export const getGradientDegreeFromMatrix = (gradientTransform, linear = true) =>
 
   const mr = decomposeTSR({a: gradientTransform[0][0], b: gradientTransform[1][0], c: gradientTransform[0][1], d: gradientTransform[1][1], e: gradientTransform[0][2], f:gradientTransform[1][2] })
   const angle = mr.rotation.angle * (180 / Math.PI) 
-  debugger
   return toFixed(angle) + '°'
 }
 
@@ -540,7 +539,7 @@ export const getCode = (node, fillItems, strokeItems, effectItems, textStyle, gl
   }
 
   // border-radius
-  if (cornerRadius) {
+  if (typeof cornerRadius === 'number') {
     code += `border-radius: ${formattedNumber(cornerRadius, globalSettings)};\n`
   } else if (rectangleCornerRadii) {
     code += `border-radius: ${rectangleCornerRadii.map(r => formattedNumber(r, globalSettings)).join(' ')};\n`

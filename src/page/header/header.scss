@@ -4,7 +4,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  height: 40px;
+  height: 42px;
   background: #212121;
   border-bottom: 1px solid #080808;
   >*{
@@ -18,9 +18,14 @@
   .header-logo{
     padding: 5px 0;
     padding-left: 6px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     img{
       display: block;
-      height: 30px;
+      width: 14px;
+      height: 14px;
     }
   }
   .header-back{

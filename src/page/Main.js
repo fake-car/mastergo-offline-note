@@ -26,6 +26,9 @@ class Main extends React.Component {
     if (id===currentId) return
     const currentPage = pageId ? data.document.children.find(({id}) => id===pageId) : {}
     const canvasData = (pageId ? currentPage.children : components).find(({id}) => id===currentId)
+    if (!canvasData) {
+      return
+    }
     this.setState({
       id: currentId,
       currentImageUrl,

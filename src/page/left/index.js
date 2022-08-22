@@ -40,7 +40,7 @@ class LeftPanel extends React.Component {
         <CollapseButton placement="left" />
         <div className="left-sider">
           {
-            exportSettings.length &&
+            !!exportSettings.length &&
             <ul className="left-sider-tabs">
               <li
                 className={cn({selected: tabIndex===0})}

@@ -61,5 +61,16 @@
       padding: 6px 12px;
       color: $white-85;
     }
+    &-wrap {
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        left: 12px;
+        height: 1px;
+        background-color: hsla(0, 0, 100%, 0.06);
+      }
+    }
   }
 }

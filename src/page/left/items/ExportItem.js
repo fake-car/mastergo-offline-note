@@ -6,66 +6,45 @@ import { getBlobData } from 'api'
 import { getImageUrl } from 'utils/helper'
 import './export-item.scss'
 
-const ExportItem = ({exportSetting, mode, isMock, onRightClick}) => {
+const ExportItem = ({exportSetting, mode, isMock, isLeft}) => {
   const [ isDownloading, setDownloading ] = useState(false)
-  const [showMenu, changeShowMenu] = useState(false)
-  const name = exportSetting.fileName
+  const fileName = exportSetting.fileName
+  const name = exportSetting.name
   const imageUrl = getImageUrl(exportSetting, mode, isMock)
-  const { protocol } = window.location
-  const isHttpServer = /^http/.test(protocol)
+  const scale = exportSetting.constraint.value
+  const format = exportSetting.format
+  // const { protocol } = window.location
+  // const isHttpServer = /^http/.test(protocol)
 
-  const handleSave = (e, name) => {
-    if (isHttpServer) {
+  const handleSave = (e, fileName) => {
+    if (!isLeft) {
       e.preventDefault()
       setDownloading(true)
       getBlobData(imageUrl)
         .then(blob => {
-          saveAs(blob, name)
+          saveAs(blob, fileName)
           setDownloading(false)
         })
     }
   }
   
-  const onClick = (e) => {
-    changeShowMenu(false)
-    onRightClick && onRightClick(false)
-    e.preventDefault()
-    setDownloading(true)
-    getBlobData(imageUrl)
-      .then(blob => {
-        saveAs(blob, name)
-        setDownloading(false)
-      })
-    document.removeEventListener('click', onClick)
-  }
-
-  const onContextMenu = (event) => {
-    event.preventDefault()
-    event.stopPropagation()
-    changeShowMenu(true)
-    onRightClick && onRightClick(true)
-    document.addEventListener('click', onClick)
-  }
 
   return <a
       href={imageUrl}
       target="_blank"
       rel="noopener noreferrer"
       className={cn('export-item', {'export-item-downloading': isDownloading})}
-      // onClick={e => handleSave(e, name)}
-      onContextMenu={onContextMenu}
+      onClick={e => handleSave(e, fileName)}
     >
       <div style={{backgroundImage: `url(${imageUrl})`}}/>
-      <span>{ name }</span>
+      <div className='export-item-desc'>
+        <span className='export-item-desc-title'>{ name }</span>
+        <span className='export-item-desc-sum'>{format}, @{scale}x</span>
+      </div>
       {
         isDownloading ?
         <Loader size={14} className="motion-loading"/> :
-        (isHttpServer ? <Download size={14}/> : <ExternalLink size={14}/>)
-      }
-      {showMenu &&       
-        <div className='export-item-menu'>
-          下载这张切图
-        </div>
+        (!isLeft ? <Download size={14}/> : <ExternalLink size={14}/>)
       }
     </a>
 }

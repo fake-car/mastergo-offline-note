@@ -68,6 +68,9 @@
       .list-container{
         height: calc(100% - 50px);
         overflow: auto;
+        &::-webkit-scrollbar {
+          display: none;
+        }
         .list-item {
           display: flex;
           align-items: center;

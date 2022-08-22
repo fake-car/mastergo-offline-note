@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import cn from 'classnames'
 import { withTranslation } from 'react-i18next'
-import { ChevronDown } from 'react-feather'
+import { ChevronUp } from 'react-feather'
 import { withGlobalContextConsumer } from 'contexts/GlobalContext'
 import Search from './Search'
 import { getFlattenedFrames } from 'utils/frame'
@@ -109,7 +109,7 @@ class Frames extends React.Component {
                 <li key={key} className={cn('frames-page', {'frames-page-collapsed': collapsedPages.includes(key)})}>
                   <h4 onClick={() => this.togglePage(key)}>
                     <span>{pagedFrames[key].name}</span>
-                    <ChevronDown size={16}/>
+                    <ChevronUp size={16}/>
                   </h4>
                   <ul className="frames-items" style={{height: `${frames.length*70}px`}}>
                     {
@@ -118,7 +118,6 @@ class Frames extends React.Component {
                           frame =>
                             <li
                               key={frame.id}
-                              title={frame.name}
                               className={cn('list-item', {selected: frameId===frame.id})}
                               onClick={() => this.handleFrameSelect(frame, key)}
                             >

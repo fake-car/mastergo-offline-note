@@ -8,7 +8,6 @@
     "tab style": "Style",
     "tab slice": "Image Slice",
     "tab version": "Versions",
-    "download all" : "download all",
     "fill type": "Fill",
     "text type": "Text",
     "effect type": "Effect",
@@ -40,7 +39,12 @@
     "exported images": "Exported images",
     "text": "Text Style",
     "multiple text styles tip": "This text contains multiple styles, click every piece to get detail, double click to copy text fragment.",
-    "multiple text styles": "Multiple text styles"
+    "multiple text styles": "Multiple text styles",
+    "thanks": "THANKS",
+    "author": "Author: leadream",
+    "export all": "export all",
+    "piece": "pieces",
+    "slices": "slices"
   },
   "zh": {
     "no exports": "没有切图",
@@ -51,7 +55,6 @@
     "tab style": "样式",
     "tab slice": "切图",
     "tab version": "版本",
-    "download all": "全部下载",
     "fill type": "颜色",
     "text type": "文字",
     "effect type": "效果",
@@ -78,11 +81,16 @@
     "stroke weight": "粗细",
     "stroke dash": "间隔",
     "stroke position": "位置",
-    "effect": "效果",
+    "effect": "特效",
     "code": "参考代码",
     "exported images": "切图",
     "text": "文字样式",
     "multiple text styles tip": "这段文本里面有多种样式，点击对应文字片段来查看不同的样式属性，双击可以复制文字片段。",
-    "multiple text styles": "多样式文本"
+    "multiple text styles": "多样式文本",
+    "thanks": "致谢",
+    "author": "开源作者: leadream",
+    "export all": "导出全部",
+    "piece": "张",
+    "slices": "切图"
   }
 }

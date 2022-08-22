@@ -395,6 +395,18 @@ class RightProps extends React.Component {
             </ul>
           </div>
         }
+        {
+          <div className="props-section thanks">
+            <h5 className="section-title">
+              <span className="title-name">{t('thanks')}</span>
+            </h5>
+            <div>
+              <p>开源作者: leadream</p>
+              <p>{`Github: `}<a href="https://github.com/leadream/heron-handoff" target="_blank">https://github.com/leadream/heron-handoff</a>
+              </p>
+            </div>
+          </div>
+        }
       </div>
     )
   }

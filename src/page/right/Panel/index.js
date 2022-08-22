@@ -28,7 +28,7 @@ class RightPanel extends React.Component {
         <div
           className={cn('panel-mask', `mask-${propsPanelState}`)}
         />
-        <ul className="panel-tabs">
+        {/* <ul className="panel-tabs">
           <li className={cn({'selected': tabIndex===0})} onClick={() => this.changeTab(0)}><Droplet size={14}/>{t('tab style')}</li>
         </ul>
         <ul className={cn('panel-list', {'hide': tabIndex!==0})}>
@@ -37,26 +37,31 @@ class RightPanel extends React.Component {
               key!=='GRID' && styles[key] &&
               <Fragment key={key}>
                 <li className="list-title">{ t(STYLE_TYPES[key]) }</li>
-                {
-                  styles[key] &&
-                  styles[key]
-                    .filter(style => key==='FILL' ? !isAllImageFill(style.items) : true)
-                    .map((style, index) =>
-                      <li key={index}>
-                        <StyleItem
-                          styles={style.items}
-                          styleName={style.name}
-                          styleType={style.styleType}
-                          isSelectable
-                          onClick={() => onShowDetail(style)}
-                        />
-                      </li>
-                    )
-                }
+                <div className='panel-list-wrap'>
+                  {
+                    styles[key] &&
+                    styles[key]
+                      .filter(style => key==='FILL' ? !isAllImageFill(style.items) : true)
+                      .map((style, index) => {
+                        return (
+                          <li key={index}>
+                          <StyleItem
+                            styles={style.items}
+                            styleName={style.name}
+                            styleType={style.styleType}
+                            isSelectable
+                            onClick={() => onShowDetail(style)}
+                          />
+                        </li>
+                        )
+                      }
+                      )
+                  }
+                </div>
               </Fragment>
             )
           }
-        </ul>
+        </ul> */}
       </div>
     )
   }

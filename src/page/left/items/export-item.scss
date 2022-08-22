@@ -1,12 +1,12 @@
 .export-item{
   display: flex;
   align-items: center;
-  padding: 12px;
+  padding: 10px;
   transition: background 0.2s;
   cursor: pointer;
   position: relative;
   &:hover{
-    background: #324894;
+    background-color: #324894;
     >svg{
       opacity: 1;
     }
@@ -17,44 +17,39 @@
     }
   }
   div:first-child {
-    width: 46px;
-    height: 46px;
-    margin-right: 6px;
+    width: 40px;
+    height: 40px;
+    margin-right: 12px;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
     background-color: #3D3D3D;
     border-radius: 6px;
   }
-  >span{
+  &-desc{
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 40px;
+    justify-content: space-between;
+    span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    &-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.85);
+    }
+    &-sum {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.3);
+    }
+    
   }
   >svg{
     opacity: 0;
     transition: opacity 0.2s;
-  }
-  &-menu {
-    position: absolute;
-    left: 60px;
-    top: 40px;
-    width: 200px;
-    height: 44px;
-    display: flex;
-    flex-direction: column;
-    padding-left: 19px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 44px;
-
-    /* MasterGo 色阶/real gray/700 */
-    background: #303030;
-    box-sizing: border-box;
-
-    /* MasterGo 色阶/gray in dark/100 */
-    border: 1px solid rgba(255, 255, 255, 0.06);
-
-    /* List */
-    box-shadow: 0px 5px 17px 0px rgba(0, 0, 0, 0.2),0px 2px 7px 0px rgba(0, 0, 0, 0.15);
   }
 }
