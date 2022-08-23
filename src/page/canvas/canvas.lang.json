@@ -8,7 +8,8 @@
     "percentage": "Press Option (Alt) to see percenatge, press Cmd (Ctrl) to see percenatge based on root frame",
     "deselect": "Press ESC to deselect element",
     "hide siders": "Press Cmd \\ (Ctrl \\) to hide siders",
-    "exports": "Select outer frame to show all exports"
+    "exports": "Select outer frame to show all exports",
+    "download slices": "Press Option (Alt) in the export options on the right to click Download in Chrome"
   },
   "zh": {
     "artboard": "画板",
@@ -19,6 +20,7 @@
     "percentage": "按 Option (Alt) 查看百分比，按 Cmd (Ctrl) 查看基于最外层 Frame 的百分比",
     "deselect": "按 ESC 可取消选择元素",
     "hide siders": "按 Cmd \\（Ctrl \\）隐藏左右侧边",
-    "exports": "选中最外层查看所有切图"
+    "exports": "选中最外层查看所有切图",
+    "download slices": "Chrome浏览器中，可以在右侧导出选项中按 Option (Alt) 点击下载"
   }
 }

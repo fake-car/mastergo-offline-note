@@ -5,7 +5,7 @@
   background: #212121;
   transition: transform 0.2s;
   .panel-exports {
-    height: calc(100% - 42px);
+    height: 100%;
     overflow-y: scroll;
     &::-webkit-scrollbar {
       display: none;
@@ -15,41 +15,45 @@
       padding: 12px;
       color: $white-36;
     }
-  }
-  .exports-download-all{
-    border-top: 1px solid #2C2C2C;
-    height: 42px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 12px;
-    color: $white-65;
-    transition: background 0.2s, color 0.2s;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    &.is-downloading{
-      justify-content: flex-start;
-    }
-    &:hover{
-      color: $white-85;
-      background-color: #324894;
-    }
-    svg{
-      margin-left: 6px;
-    }
-    span{
-      position: relative;
-      z-index: 1;
-    }
-    .download-all-progress{
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      background-color: #2f3446;
-      z-index: 0;
+    li {
+      margin-top: 3px;
+      padding: 0 6px;
     }
   }
+  // .exports-download-all{
+  //   border-top: 1px solid #2C2C2C;
+  //   height: 42px;
+  //   position: relative;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   padding: 6px 12px;
+  //   color: $white-65;
+  //   transition: background 0.2s, color 0.2s;
+  //   font-size: 13px;
+  //   font-weight: 600;
+  //   cursor: pointer;
+  //   &.is-downloading{
+  //     justify-content: flex-start;
+  //   }
+  //   &:hover{
+  //     color: $white-85;
+  //     background-color: #324894;
+  //   }
+  //   svg{
+  //     margin-left: 6px;
+  //   }
+  //   span{
+  //     position: relative;
+  //     z-index: 1;
+  //   }
+  //   .download-all-progress{
+  //     position: absolute;
+  //     top: 0;
+  //     left: 0;
+  //     height: 100%;
+  //     background-color: #2f3446;
+  //     z-index: 0;
+  //   }
+  // }
 }

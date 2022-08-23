@@ -377,12 +377,15 @@ class RightProps extends React.Component {
           !!(exportSettings && exportSettings.length) &&
           <div className="props-section props-export">
             <h5 className="section-title">
-              <span className="title-name">{t('exported images')}</span>
+              <span className="title-name">{t('exported files')}</span>
             </h5>
             <ul className="section-items">
               {
                 exportSettings.map((exportSetting, index) =>
-                  <li key={index}>
+                  <li
+                    key={index}
+                    className='right-export-item'
+                  >
                     <ExportItem
                       mode={mode}
                       isMock={isMock}

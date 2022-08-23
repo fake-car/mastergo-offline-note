@@ -45,7 +45,7 @@
       }
     }
     .left-sider-list{
-      height: calc(100% - 37px);
+      height: calc(100% - 34px);
       &.without-tab{
         height: 100%;
       }
@@ -66,47 +66,12 @@
         }
       }
       .list-container{
-        // height: calc(100% - 50px);
-        height: 100%;
+        height: calc(100% - 50px);
         overflow: auto;
+        display: flex;
+        flex-direction: column;
         &::-webkit-scrollbar {
           display: none;
-        }
-        .list-item {
-          border-radius: 6px;
-          display: flex;
-          align-items: center;
-          padding: 10px;
-          font-size: 14px;
-          font-weight: 500;
-          cursor: pointer;
-          transition: background 0.2s;
-          &:hover{
-            background: rgba(50, 50, 50, 1);
-          }
-          &-hidden{
-            display: none;
-          }
-          &.selected{
-            background: #324894;
-          }
-          .item-thumbnail{
-            flex-shrink: 0;
-            width: 40px;
-            height: 40px;
-            margin-right: 8px;
-            background-position: center;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-color: #3D3D3D;
-            border-radius: 6px;
-            overflow: hidden;
-          }
-          span {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
         }
         .frame-item {
           margin-top: 3px;
@@ -114,7 +79,42 @@
           padding: 0 6px;
           display: flex;
           flex-direction: column;
-
+          .list-item {
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            &:hover{
+              background: rgba(50, 50, 50, 1);
+            }
+            &-hidden{
+              display: none;
+            }
+            &.selected{
+              background: #324894;
+            }
+            .item-thumbnail{
+              flex-shrink: 0;
+              width: 46px;
+              height: 46px;
+              margin-right: 8px;
+              background-position: center;
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-color: #3D3D3D;
+              border-radius: 6px;
+              overflow: hidden;
+            }
+            span {
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+          }
         }
         &.nested-frames {
           height: 100%;

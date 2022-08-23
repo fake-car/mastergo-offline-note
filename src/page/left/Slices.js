@@ -13,6 +13,7 @@ class SlicesPanel extends React.Component {
   state = {
     percentage: 0,
     progressText: '',
+    filteredSettings: [],
   }
   setProgress = (percentage, progressText) => {
     this.setState({
@@ -20,52 +21,56 @@ class SlicesPanel extends React.Component {
       progressText
     })
   }
-  handleDownloadAll = async () => {
-    const { percentage } = this.state
-    if (percentage!==0) return
-    const { exportSettings, documentName, t } = this.props
-    const zip = new JSZip()
-    const length = exportSettings.length
-    const folderName = `${documentName.replace(/\//g, '-')}-exports`
-    const exportsFolder = zip.folder(folderName)
-    this.setProgress(1, t('downloading images'))
+  // handleDownloadAll = async () => {
+  //   const { percentage, filteredSettings  } = this.state
+  //   if (percentage!==0) return
+  //   const { documentName, t } = this.props
+  //   const zip = new JSZip()
+  //   const length = filteredSettings.length
+  //   const folderName = `${documentName.replace(/\//g, '-')}-exports`
+  //   const exportsFolder = zip.folder(folderName)
+  //   this.setProgress(1, t('downloading images'))
 
-    await asyncForEach(exportSettings, async (exportSetting, index) => {
-      const imgName = exportSetting.fileName
-      const imgUrl = getImageUrl(exportSetting)
-      const imgData = await getBufferData(imgUrl)
-      this.setProgress((index+1)*Math.floor(90/length), t('dealing with', {name: imgName}))
-      exportsFolder.file(imgName, imgData, {base64: true})
-    })
+  //   await asyncForEach(filteredSettings, async (exportSetting, index) => {
+  //     const imgName = exportSetting.fileName
+  //     const imgUrl = getImageUrl(exportSetting)
+  //     const imgData = await getBufferData(imgUrl)
+  //     this.setProgress((index+1)*Math.floor(90/length), t('dealing with', {name: imgName}))
+  //     exportsFolder.file(imgName, imgData, {base64: true})
+  //   })
 
-    this.setProgress(96, t('compressing files'))
-    zip.generateAsync({type: 'blob'})
-      .then(content => {
-        saveAs(content, `${folderName}.zip`)
-        this.setProgress(100, t('downloaded'))
-        const timer = setTimeout(() => {
-          this.setProgress(0, '')
-          clearTimeout(timer)
-        }, 800)
-      })
-  }
+  //   this.setProgress(96, t('compressing files'))
+  //   zip.generateAsync({type: 'blob'})
+  //     .then(content => {
+  //       saveAs(content, `${folderName}.zip`)
+  //       this.setProgress(100, t('downloaded'))
+  //       const timer = setTimeout(() => {
+  //         this.setProgress(0, '')
+  //         clearTimeout(timer)
+  //       }, 800)
+  //     })
+  // }
 
 
   componentDidMount() {
+    const { exportSettings } = this.props
+    this.setState({
+      filteredSettings: !!exportSettings.length ?
+      exportSettings.filter(obj => obj.format !== 'PDF') : []
+    })
+
   }
   render () {
-    const { mode, isMock, exportSettings, t, visible } = this.props
-    const { percentage, progressText } = this.state
+    const { mode, isMock, t, visible } = this.props
+    const { percentage, progressText, filteredSettings } = this.state
     const { protocol } = window.location
     return (
       <div className={cn('right-panel', {hide: !visible})}>
         <ul 
           className={cn('panel-exports')}
         >
-            {
-              !!exportSettings.length ?
-              exportSettings
-                .map((exportSetting, index) =>
+            { !!filteredSettings.length ?
+              filteredSettings.map((exportSetting, index) =>
                   <li key={index}>
                     <ExportItem
                       mode={mode}
@@ -79,16 +84,16 @@ class SlicesPanel extends React.Component {
               <li className="exports-empty">{t('no exports')}</li>
             }
           </ul>
-          {
-            !!exportSettings.length &&
+          {/* {
+            !!filteredSettings.length &&
             <li
               className={cn('exports-download-all', {'is-downloading': percentage})}
               onClick={this.handleDownloadAll}
             >
-              <span>{ progressText || `${t('export all')} ${exportSettings.length} ${t('piece')} ${t('slices')}` }</span> { !percentage && <DownloadCloud size={14}/> }
+              <span>{ progressText || `${t('export all')} ${filteredSettings.length} ${t('piece')} ${t('slices')}` }</span> { !percentage && <DownloadCloud size={14}/> }
               <div className="download-all-progress" style={{width: `${percentage}%`}}/>
             </li>
-          }
+          } */}
       </div>
     )
   }

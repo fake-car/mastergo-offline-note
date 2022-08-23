@@ -95,12 +95,12 @@ class Frames extends React.Component {
     const { frameId, searchValue, collapsedPages } = this.state
     return (
       <Fragment>
-        <Search
+        {/* <Search
           visible={visible}
           value={searchValue}
           onChange={this.handleSearchChange}
           onClear={this.clearSearch}
-        />
+        /> */}
         <ul className={cn('list-container frames', {hide: !visible})}>
           {
             Object.keys(pagedFrames).map(key => {
@@ -111,23 +111,27 @@ class Frames extends React.Component {
                     <span>{pagedFrames[key].name}</span>
                     <ChevronUp size={16}/>
                   </h4>
-                  <ul className="frames-items" style={{height: `${frames.length*70}px`}}>
+                  <ul className="frames-items" style={{height: `${frames.length*63}px`}}>
                     {
                       frames
                         .map(
                           frame =>
                             <li
                               key={frame.id}
-                              className={cn('list-item', {selected: frameId===frame.id})}
                               onClick={() => this.handleFrameSelect(frame, key)}
+                              className='frame-item'
                             >
-                              <div
-                                className="item-thumbnail"
-                                style={{
-                                  backgroundImage: getBackgroundImageUrl(frame, mode, isMock)
-                                }}
-                              />
-                              <span>{frame.name}</span>
+                              <div 
+                                className={cn('list-item', {selected: frameId===frame.id})}
+                              >
+                                <div
+                                  className="item-thumbnail"
+                                  style={{
+                                    backgroundImage: getBackgroundImageUrl(frame, mode, isMock)
+                                  }}
+                                />
+                                <span>{frame.name}</span>
+                              </div>
                             </li>
                         )
                     }

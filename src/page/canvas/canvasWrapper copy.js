@@ -21,14 +21,13 @@ function canvasWrapper (Canvas) {
         initialHeight: 0,
         posX: 0,
         posY: 0,
-        minScale: 0.25,
+        minScale: 1,
         scale: 1,
         isZoomimg: false,
         isDragging: false,
         spacePressed: false,
         originX: 0,
         originY: 0,
-        isNormalMode: true,
         // if show percentage in marks
         // '': not show percentage
         // 'auto': based on common parent
@@ -38,37 +37,32 @@ function canvasWrapper (Canvas) {
     }
     initializeCanvas = (needResetSizeAndPosition) => {
       const { frameBound, width, height } = this.getOffsetSize()
-      const { scale, isNormalMode } = this.state
+      const { scale } = this.state
       const { clientWidth, clientHeight } = this.container.current
-      let minScale = 0.25
+      let minScale = 1
       let initialWidth, initialHeight
-      let isNormal = isNormalMode
-      let initialScale = 1
       if (width + 120 > clientWidth || height + 120 > clientHeight) {
         if ((width + 120)/(height + 120) > clientWidth/clientHeight) {
-          initialScale = toFixed((clientWidth - 120)/width)
+          minScale = toFixed((clientWidth - 120)/width)
         } else {
-          initialScale = toFixed((clientHeight - 120)/height)
+          minScale = toFixed((clientHeight - 120)/height)
         }
-        initialWidth = toFixed(clientWidth/initialScale)
-        initialHeight = toFixed(clientHeight/initialScale)
-        isNormal = false
+        initialWidth = toFixed(clientWidth/minScale)
+        initialHeight = toFixed(clientHeight/minScale)
       } else {
-        minScale = 0.25
+        minScale = 1
         initialWidth = clientWidth
         initialHeight = clientHeight
-        isNormal = true
       }
       this.setState({
-        scale: needResetSizeAndPosition ? (isNormal ? 1: initialScale) : Math.max(scale, minScale),
+        scale: needResetSizeAndPosition ? minScale : Math.max(scale, minScale),
         minScale,
         // remember container size
         containerWidth: clientWidth,
         containerHeight: clientHeight,
         frameBound,
         initialWidth,
-        initialHeight,
-        isNormalMode: isNormal
+        initialHeight
       })
       if (needResetSizeAndPosition) {
         this.setState({
@@ -97,13 +91,13 @@ function canvasWrapper (Canvas) {
     }
     getSize = (scale, initialSize) => initialSize ? scale*initialSize : initialSize
     onStep = (increment, isDirect = false) => {
-      const { containerWidth, containerHeight, initialWidth, initialHeight, scale, minScale, isNormalMode } = this.state
+      const { containerWidth, containerHeight, initialWidth, initialHeight, scale, minScale } = this.state
       // every step changes 25%
       const currentScale = Math.max(minScale, Math.min(4, isDirect ? increment : (scale + increment*0.25)))
       this.setState({
         scale: currentScale,
-        posX: currentScale < 1? 0 : (containerWidth - initialWidth*currentScale) / 2,
-        posY: currentScale < 1? 0 : (containerHeight - initialHeight*currentScale) / 2
+        posX: (containerWidth - initialWidth*currentScale)/2,
+        posY: (containerHeight - initialHeight*currentScale)/2
       })
     }
     calculateStaringOrigins = e => {
@@ -222,7 +216,7 @@ function canvasWrapper (Canvas) {
         e.preventDefault()
         const { initialWidth, initialHeight, posX, posY, scale, minScale } = this.state
         const { leftCollapse } = this.props.globalSettings
-        if (e.ctrlKey || e.metaKey) {
+        if (e.ctrlKey) {
           // startZoomimg
           this.calculateStaringOrigins(e)
           const { originX, originY } = this.state
@@ -254,21 +248,13 @@ function canvasWrapper (Canvas) {
       const canvas = this.canvas.current
       const width = container.clientWidth
       const height = container.clientHeight
-      const { containerWidth, containerHeight, scale } = this.state
+      const { containerWidth, containerHeight } = this.state
       if (width === containerWidth && height === containerHeight) return
       this.initializeCanvas()
-      if (scale < 1) {
-        this.setState({
-          posX: Math.max(0, Math.max(px2number(canvas.style.left), width - canvas.clientWidth)),
-          posY: Math.max(0, Math.max(px2number(canvas.style.top), height - canvas.clientHeight))
-        })
-      } else {
-        this.setState({
-          posX: Math.min(0, Math.max(px2number(canvas.style.left), width - canvas.clientWidth)),
-          posY: Math.min(0, Math.max(px2number(canvas.style.top), height - canvas.clientHeight))
-        })
-      }
-
+      this.setState({
+        posX: Math.min(0, Math.max(px2number(canvas.style.left), width - canvas.clientWidth)),
+        posY: Math.min(0, Math.max(px2number(canvas.style.top), height - canvas.clientHeight))
+      })
     }
     componentDidUpdate (prevProps) {
       // resize when sider collapse changed
@@ -296,13 +282,14 @@ function canvasWrapper (Canvas) {
     render () {
       const { t } = this.props
       const { width, height } = this.getOffsetSize()
-      const { percentageMode, initialWidth, initialHeight, frameBound, posX, posY, scale, spacePressed, isDragging, isNormalMode } = this.state
+      const { percentageMode, initialWidth, initialHeight, frameBound, posX, posY, scale, spacePressed, isDragging } = this.state
       const style = {
         top: posY,
         left: posX,
-        width:  Math.max(this.getSize(scale, initialWidth), (this.container.current? this.container.current.clientWidth : initialWidth)),
-        height: Math.max(this.getSize(scale, initialHeight), (this.container.current? this.container.current.clientHeight : initialHeight))
+        width: this.getSize(scale, initialWidth),
+        height: this.getSize(scale, initialHeight)
       }
+
       return (
         <div ref={this.container} className="main-canvas">
           <div className="canvas-steper">
@@ -344,7 +331,6 @@ function canvasWrapper (Canvas) {
                 <li>5. {t('deselect')}</li>
                 <li>6. {t('hide siders')}</li>
                 <li>7. {t('exports')}</li>
-                <li>8. {t('download slices')}</li>
               </ul>
             }
           >
