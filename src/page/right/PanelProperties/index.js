@@ -384,7 +384,7 @@ class RightProps extends React.Component {
                 exportSettings.map((exportSetting, index) =>
                   <li
                     key={index}
-                    className='right-export-item'
+                    className='-export-item'
                   >
                     <ExportItem
                       mode={mode}
