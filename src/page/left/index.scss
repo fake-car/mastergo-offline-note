@@ -66,8 +66,8 @@
         }
       }
       .list-container{
-        // height: calc(100% - 50px);
-        height: 100%;
+        height: calc(100% - 50px);
+        // height: 100%;
         overflow: auto;
         &::-webkit-scrollbar {
           display: none;

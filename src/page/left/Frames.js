@@ -95,12 +95,12 @@ class Frames extends React.Component {
     const { frameId, searchValue, collapsedPages } = this.state
     return (
       <Fragment>
-        {/* <Search
+        <Search
           visible={visible}
           value={searchValue}
           onChange={this.handleSearchChange}
           onClear={this.clearSearch}
-        /> */}
+        />
         <ul className={cn('list-container frames', {hide: !visible})}>
           {
             Object.keys(pagedFrames).map(key => {
