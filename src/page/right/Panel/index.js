@@ -28,7 +28,7 @@ class RightPanel extends React.Component {
         <div
           className={cn('panel-mask', `mask-${propsPanelState}`)}
         />
-        {/* <ul className="panel-tabs">
+        <ul className="panel-tabs">
           <li className={cn({'selected': tabIndex===0})} onClick={() => this.changeTab(0)}><Droplet size={14}/>{t('tab style')}</li>
         </ul>
         <ul className={cn('panel-list', {'hide': tabIndex!==0})}>
@@ -61,7 +61,7 @@ class RightPanel extends React.Component {
               </Fragment>
             )
           }
-        </ul> */}
+        </ul>
       </div>
     )
   }

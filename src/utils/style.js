@@ -124,7 +124,6 @@ export const getGradientDegreeFromMatrix = (gradientTransform, linear = true) =>
   // if (rotation < 0) {
   //     rotation = rotation + 360
   // }
-  // debugger
 
   const mr = decomposeTSR({a: gradientTransform[0][0], b: gradientTransform[1][0], c: gradientTransform[0][1], d: gradientTransform[1][1], e: gradientTransform[0][2], f:gradientTransform[1][2] })
   const angle = mr.rotation.angle * (180 / Math.PI) 

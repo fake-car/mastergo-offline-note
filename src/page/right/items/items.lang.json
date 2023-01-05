@@ -1,5 +1,6 @@
 {
   "en": {
+    "style name": "Style name",
     "font family": "Font family",
     "font weight": "Font weight",
     "font size": "Font size",
@@ -15,6 +16,7 @@
     "color alpha": "Alpha"
   },
   "zh": {
+    "style name": "样式名称",
     "font family": "字体",
     "font weight": "字重",
     "font size": "字号",
