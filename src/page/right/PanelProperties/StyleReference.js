@@ -8,8 +8,7 @@ const StyleReference = ({styleItems, styles, nodeStyles, type, onShowStyleDetail
   const styleReference = getStyleById(styles, nodeStyles, type)
   const styleType = type==='stroke' ? 'FILL' : type.toUpperCase()
   function handleReferenceClick () {
-    //TODO: 等文字样式有fontname放开
-    if (styleReference.remote || type === 'text') {
+    if (styleReference.remote) {
       return
     }
     onShowStyleDetail && onShowStyleDetail(styleType, nodeStyles[type])
@@ -27,7 +26,7 @@ const StyleReference = ({styleItems, styles, nodeStyles, type, onShowStyleDetail
         isHoverable={!styleReference.remote && type !== 'text'}
       />
       {
-        !styleReference.remote && type !== 'text' &&
+        !styleReference.remote &&
         <ArrowRight size={14}/>
       }
     </span>
