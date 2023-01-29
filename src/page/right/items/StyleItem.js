@@ -35,13 +35,14 @@ const StyleItem = ({styles, styleName, styleType, isHoverable, isSelectable, ...
       )
     case 'EFFECT':
       const { type } = getEffectsStyle(styles)
+      // 存在隐藏特效 type会被处理为空
       return (
-        <a className={className('effect')} {...props}>
+        type? <a className={className('effect')} {...props}>
           <div className="item-preview">
             { EFFECTS[type].icon }
           </div>
           { styleName }
-        </a>
+        </a> : null
       )
     case 'TEXT':
       return (
