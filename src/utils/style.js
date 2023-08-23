@@ -563,7 +563,7 @@ export const getCode = (node, fillItems, strokeItems, effectItems, textStyle, gl
 
   // border
   if (strokeItems.length) {
-    const borderStyle = strokeDashes ? 'dashed' : 'solid'
+    const borderStyle = (strokeDashes && strokeDashes.length) ? 'dashed' : 'solid'
     strokeItems
       .filter(({type}) => type==='SOLID')
       // eslint-disable-next-line
